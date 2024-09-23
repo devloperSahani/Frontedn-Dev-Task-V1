@@ -1,0 +1,438 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Quiz Menia</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Font+Name:wght@400;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="index.css" />
+    <script src="index.js"></script>
+  </head>
+  <body>
+    <nav>
+      <header id="header">
+        <span class="nav-second">Quiz</span>
+        <span class="nav-third">Menia</span>
+      </header>
+    </nav>
+    <div class="container">
+      <section id="welcome-section">
+        <div class="title-head">
+          <span class="title-frist">Welcome to</span>
+          <span class="title-second">Quiz</span>
+          <span class="title-third">Menia</span>
+        </div>
+        <div class="rules" id="rules-section">
+          <div>Please Read All the Rules before starting .</div>
+          <br />
+          <div style="color: #b92b5d">Quiz rule</div>
+        </div>
+        <div class="input-field">
+          <label for="full-name">Full Name</label>
+          <input
+            type="text"
+            id="full-name"
+            placeholder="Enter your full name"
+          />
+        </div>
+        <div style="display: flex; justify-content: start; margin-bottom: 15px">
+          Please Select the Topics to continue
+        </div>
+
+        <div class="topics">
+          <button id="js-basic-btn">JavaScript Basic</button>
+          <button id="angular-basic-btn">Angular Basic</button>
+          <button id="react-advanced-btn">React.js Advanced</button>
+          <button id="flutter-btn">Flutter</button>
+        </div>
+        <div>
+          <button id="start-btn">Start Quiz</button>
+        </div>
+      </section>
+
+      <div id="quiz-section" style="display: none">
+          
+        <div style="display: flex;justify-content: space-between; align-items: center;">
+            <div id="quiz-question" class="timer"> 10</div>
+            <div class="timer" id="timer">Time: 10s</div>
+        </div>
+ 
+        <div class="progress-bar">
+          <div class="progress-bar-fill" id="progress"></div>
+        </div>
+        <div class="question-container" id="question-container">
+          <p id="question-text"></p>
+          <ul class="options" id="options"></ul>
+        </div>
+        <div style="display: flex">
+          <button id="next-btn">Next Question</button>
+          <span id="skip-btn">Skip this Question</span>
+        </div>
+        <div id="result"></div>
+      </div>
+
+      <div id="scoreboard" style="display: none">
+        <!-- <div class="progress-bar">
+          <div class="progress-bar-fill" id="final-progress"></div>
+        </div> -->
+        <div id="score-result"></div>
+      </div>
+
+      <!-- Modal -->
+      <div id="rules-modal" class="modal">
+        <div class="modal-content">
+          <span class="close">&times;</span>
+          <h2>Quiz Rules</h2>
+          <div>
+            <div class="header-modal-title">10 Second Timer</div>
+            <ul class="header-modal-content">
+              <li>Each Question Comes with a 10 second timer.</li>
+              <li>
+                If you don't answer with the limit time, the app will
+                autometcilly move to the next question.
+              </li>
+            </ul>
+            <div class="header-modal-title">Manual Navigation</div>
+            <ul class="header-modal-content">
+              <li>You can Navigate to the next question before time expire.</li>
+              <li>
+                use the Next question to move ahead if you are ready before the
+                timers run out.
+              </li>
+            </ul>
+            <div class="header-modal-title">
+              Final Score and Performance Message
+            </div>
+            <ul class="header-modal-content">
+              <li>
+                After all Question and answer your final Score will be displayed
+              </li>
+              <li>
+                Based on your Performance , you will receive the personalise
+                message
+              </li>
+            </ul>
+            <ul class="header-modal-content">
+              <li>Greate Job !: if you score above 80%</li>
+              <li>wll Done Job !: if you score between 60% and 80%</li>
+              <li>Keep Praticing !: if you score below 60%</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+    <script>
+      const quizData = {
+        categories: [
+          {
+            id: "js_basics",
+            name: "JavaScript Basics",
+            questions: [
+              {
+                id: "q3",
+                question:
+                  "Which of the following is the correct way to write a comment in JavaScript?",
+                options: [
+                  "A. <!-- This is a comment -->",
+                  "B. // This is a comment",
+                  "C. 'This is a comment'",
+                  "D. /* This is a comment */",
+                ],
+                correctAnswer: "B",
+                timeLimit: 10,
+              },
+              {
+                id: "q4",
+                question:
+                  "Which of the following is not a JavaScript data type?",
+                options: [
+                  "A. Undefined",
+                  "B. Number",
+                  "C. Boolean",
+                  "D. Float",
+                ],
+                correctAnswer: "D",
+                timeLimit: 10,
+              },
+              {
+                id: "q5",
+                question: "How do you declare a JavaScript variable?",
+                options: [
+                  "A. var carName;",
+                  "B. variable carName;",
+                  "C. v carName;",
+                  "D. var: carName;",
+                ],
+                correctAnswer: "A",
+                timeLimit: 10,
+              },
+              {
+                id: "q6",
+                question:
+                  "What will the following code return: Boolean(10 > 9)?",
+                options: ["A. true", "B. false", "C. NaN", "D. Undefined"],
+                correctAnswer: "A",
+                timeLimit: 10,
+              },
+              {
+                id: "q7",
+                question:
+                  "What is the correct way to write an array in JavaScript?",
+                options: [
+                  "A. var colors = 'red', 'green', 'blue';",
+                  "B. var colors = (1:'red', 2:'green', 3:'blue');",
+                  "C. var colors = ['red', 'green', 'blue'];",
+                  "D. var colors = {red, green, blue};",
+                ],
+                correctAnswer: "C",
+                timeLimit: 10,
+              },
+              {
+                id: "q8",
+                question:
+                  "How do you round the number 7.25 to the nearest integer in JavaScript?",
+                options: [
+                  "A. Math.round(7.25)",
+                  "B. round(7.25)",
+                  "C. Math.rnd(7.25)",
+                  "D. rnd(7.25)",
+                ],
+                correctAnswer: "A",
+                timeLimit: 10,
+              },
+              {
+                id: "q9",
+                question:
+                  "Which of the following is a valid JavaScript variable name?",
+                options: [
+                  "A. 2names",
+                  "B. _firstName",
+                  "C. first-name",
+                  "D. first name",
+                ],
+                correctAnswer: "B",
+                timeLimit: 10,
+              },
+              {
+                id: "q10",
+                question: "Inside which HTML element do we put the JavaScript?",
+                options: [
+                  "A. <javascript>",
+                  "B. <script>",
+                  "C. <js>",
+                  "D. <scripting>",
+                ],
+                correctAnswer: "B",
+                timeLimit: 10,
+              },
+              {
+                id: "q11",
+                question:
+                  "How can you add a single-line comment in JavaScript?",
+                options: [
+                  "A. # This is a comment",
+                  "B. // This is a comment",
+                  "C. /* This is a comment */",
+                  "D. <!-- This is a comment -->",
+                ],
+                correctAnswer: "B",
+                timeLimit: 10,
+              },
+              {
+                id: "q12",
+                question:
+                  "Which method can be used to find the length of a string in JavaScript?",
+                options: [
+                  "A. length()",
+                  "B. len()",
+                  "C. getSize()",
+                  "D. strLength()",
+                ],
+                correctAnswer: "A",
+                timeLimit: 10,
+              },
+            ],
+          },
+        ],
+      };
+      let currentQuestionIndex = 0;
+      let score = 0;
+      let timer;
+      const questionContainer = document.getElementById("question-container");
+      const questionText = document.getElementById("question-text");
+      const optionsElement = document.getElementById("options");
+      const nextButton = document.getElementById("next-btn");
+      const skipButton = document.getElementById("skip-btn");
+      const resultElement = document.getElementById("result");
+      const timerElement = document.getElementById("timer");
+      const progressElement = document.getElementById("progress");
+      //   const finalProgressElement = document.getElementById("final-progress");
+      const scoreResultElement = document.getElementById("score-result");
+      const startButton = document.getElementById("start-btn");
+      const quizSection = document.getElementById("quiz-section");
+      const scoreboardSection = document.getElementById("scoreboard");
+      const welcomeSection = document.getElementById("welcome-section");
+      const rulesModal = document.getElementById("rules-modal");
+      const closeModal = document.querySelector(".close");
+
+ 
+      // Open rules modal
+      document.getElementById("rules-section").addEventListener("click", () => {
+        rulesModal.style.display = "block";
+      });
+
+      // Close modal
+      closeModal.addEventListener("click", () => {
+        rulesModal.style.display = "none";
+      });
+
+      window.onclick = function (event) {
+        if (event.target === rulesModal) {
+          rulesModal.style.display = "none";
+        }
+      };
+
+      startButton.addEventListener("click", () => {
+        const userName = document.getElementById("full-name").value;
+        if (!userName) {
+          alert("Please enter your full name.");
+          return;
+        }
+
+        welcomeSection.style.display = "none";
+        quizSection.style.display = "block";
+        loadQuestion();
+        updateProgressBar();
+      });
+
+      function loadQuestion() {
+        clearInterval(timer);
+        const question = quizData.categories[0].questions[currentQuestionIndex];
+        questionText.textContent = question.question;
+        optionsElement.innerHTML = "";
+
+        question.options.forEach((option) => {
+          const li = document.createElement("li");
+          li.textContent = option;
+          li.style.border = "2px solid #ccc"; // Border style
+          li.style.padding = "20px"; // Padding
+          li.style.borderRadius = "5px"; // Optional: rounded corners
+          li.style.margin = "10px 0"; // Margin for spacing between options
+          li.style.cursor = "pointer"; // Pointer cursor on hover
+          li.addEventListener("click", () => checkAnswer(li, option.correct));
+          optionsElement.appendChild(li);
+          li.setAttribute("data-answer", option);
+        //   li.addEventListener("click", () =>
+        //     checkAnswer(li, question.correctAnswer)
+        //   );
+          optionsElement.appendChild(li);
+        });
+
+        startTimer(question.timeLimit);
+      }
+
+      function checkAnswer(selectedOption, correctAnswer) {
+        const allOptions = optionsElement.querySelectorAll("li");
+        allOptions.forEach((option) =>
+          option.removeEventListener("click", checkAnswer)
+        );
+
+        const answer = selectedOption.getAttribute("data-answer");
+        if (answer.charAt(0) === correctAnswer) {
+          selectedOption.style.borderColor = "#b92b5d"; //
+          score++;
+        } else {
+          selectedOption.style.borderColor = "#b92b5d"; // Red
+        }
+        // Show buttons
+        nextButton.style.display = "inline-block";
+        skipButton.style.display = "inline-block";
+      }
+
+      function startTimer(time) {
+        let timeLeft = time;
+        timerElement.textContent = `0:${timeLeft} `;
+
+        timer = setInterval(() => {
+          timeLeft--;
+          timerElement.textContent = ` 0:${timeLeft} `;
+
+          if (timeLeft <= 0) {
+            clearInterval(timer);
+            alert("Time's up!");
+            showNextQuestion(); // Automatically show next question on timeout
+          }
+        }, 1000);
+      }
+
+      function showNextQuestion() {
+        currentQuestionIndex++;
+        if (currentQuestionIndex < quizData.categories[0].questions.length) {
+          loadQuestion();
+          //   nextButton.style.display = "none";
+          skipButton.style.display = "inline-block"; // Show skip button
+          updateProgressBar();
+        } else {
+          showResult();
+        }
+      }
+
+      function skipQuestion() {
+        currentQuestionIndex++;
+        if (currentQuestionIndex < quizData.categories[0].questions.length) {
+          loadQuestion();
+        //   nextButton.style.display = "none";
+          skipButton.style.display = "inline-block"; // Show skip button
+          updateProgressBar();
+        } else {
+          showResult();
+        }
+      }
+
+      function updateProgressBar() {
+        const progress =
+          (currentQuestionIndex / quizData.categories[0].questions.length) *
+          100;
+        progressElement.style.width = `${progress}%`;
+      }
+
+      function showResult() {
+  const totalQuestions = quizData.categories[0].questions.length;
+  const scorePercentage = (score / totalQuestions) * 100;
+
+  let feedbackMessage = "";
+  if (scorePercentage >= 80) {
+    feedbackMessage = "Great Job!";
+  } else if (scorePercentage >= 60) {
+    feedbackMessage = "Well Done!";
+  } else {
+    feedbackMessage = "Keep Practicing!";
+  }
+
+  let scoreBordContenet = `
+    <div class="container">
+      <div class="header">CONGRATULATIONS!</div>
+      <div class="feedback">You have successfully completed the Quiz!</div>
+      <div class="score">Your Score: <strong>${score}</strong> out of <strong>${totalQuestions}</strong></div>
+      <div class="score">${feedbackMessage}</div>
+      <div class="stats">
+        <div>You answered <strong>${score}</strong> correct out of <strong>${totalQuestions}</strong> questions.</div>
+      </div>
+    </div>
+  `;
+
+  questionContainer.style.display = "none";
+  nextButton.style.display = "none"; // Hide next button
+  skipButton.style.display = "none"; // Hide skip button
+  scoreResultElement.innerHTML = scoreBordContenet;
+  quizSection.style.display = "none"; // Hide quiz section
+  scoreboardSection.style.display = "block"; // Show scoreboard
+}
+      nextButton.addEventListener("click", showNextQuestion);
+      skipButton.addEventListener("click", skipQuestion);
+    </script>
+  </body>
+</html>
